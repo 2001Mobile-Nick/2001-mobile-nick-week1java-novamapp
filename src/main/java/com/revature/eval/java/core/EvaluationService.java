@@ -201,8 +201,19 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		StringBuilder strOfNums = new StringBuilder();
+		for (int i=0; i < string.length(); i++) {
+	        char c = string.charAt(i);
+	        if (!(c < '0' || c > '9')) {
+	        	if(i == 0) {
+	        		if(c > '1') strOfNums.append(c);
+	        	} else {
+	        		strOfNums.append(c);
+	        	}
+	        }
+	    }
+		System.out.println("Original: "+string+" Clean: "+strOfNums);
+		return strOfNums.toString();
 	}
 
 	/**

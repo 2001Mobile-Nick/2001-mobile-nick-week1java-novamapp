@@ -36,8 +36,6 @@ public class EvaluationService {
 		for(int i=0; i<wordList.length; i++) {
 			acronym+=wordList[i].charAt(0);
 		}
-		System.out.print("Phrase: "+phrase+" \t| ");
-		System.out.println("Acronym: "+acronym);
 		return acronym;
 	}
 
@@ -212,7 +210,6 @@ public class EvaluationService {
 	        	}
 	        }
 	    }
-		System.out.println("Original: "+string+" Clean: "+strOfNums);
 		return strOfNums.toString();
 	}
 

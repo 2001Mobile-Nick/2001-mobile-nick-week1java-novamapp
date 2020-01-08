@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -277,9 +278,12 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+
+	//static class BinarySearch<T> extends ArrayList{
+	static class BinarySearch<T>{
 		private List<T> sortedList;
 
+		//@Override
 		public int indexOf(T t) {
 			// TODO Write an implementation for this method declaration
 			return 0;
@@ -319,6 +323,20 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		// TODO Write an implementation for this method declaration
+
+		String[] words = string.split(" ");
+		StringBuilder pigLatin = new StringBuilder();
+		for(int i=0; i<words.length; i++) {
+			boolean isConsonant = true;
+			int count = 0;
+			while( (count < words[i].length()) ) {
+				isConsonant = !Arrays.asList('A', 'E', 'I', 'O', 'U').contains(words[i].toUpperCase().charAt(count));
+				if(!isConsonant) break;
+				count++;
+			}
+			String translatedWord = words[i].substring(count, words[i].length()).concat(words[i].substring(0, count))+"ay ";
+			pigLatin.append(translatedWord);
+		}
 		return null;
 	}
 

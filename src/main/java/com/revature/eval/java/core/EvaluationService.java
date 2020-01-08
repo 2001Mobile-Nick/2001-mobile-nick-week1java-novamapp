@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -139,7 +140,33 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		string = string.toUpperCase();
+		int score = 0;
+		for(int i=0; i<string.length(); i++) {
+			char x = string.charAt(i);
+			if(Arrays.asList('A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T').contains(x)) {
+				score+=1;
+			}
+			else if(Arrays.asList('D','G').contains(x)) {
+				score+=2;
+			}
+			else if(Arrays.asList('B','C','M','P').contains(x)) {
+				score+=3;
+			}
+			else if(Arrays.asList('F','H','V','W','Y').contains(x)) {
+				score+=4;
+			}
+			else if(x == 'K') {
+				score+=5;
+			}
+			else if(Arrays.asList('J','X').contains(x)) {
+				score+=8;
+			}
+			else if(Arrays.asList('Q','Z').contains(x)) {
+				score+=10;
+			}
+		}
+		return score;
 	}
 
 	/**

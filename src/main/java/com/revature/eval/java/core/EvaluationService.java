@@ -383,6 +383,12 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
+		//divide by two
+			//result is mod =1 or mod =0
+		
+		//if mod =1, not divisible by two, add 1 to two then divide
+		
+		//if mod =0, divisible by two
 		return null;
 	}
 
@@ -422,7 +428,35 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			StringBuilder encodedString = new StringBuilder();
+			for(int i=0; i<string.length(); i++) {
+				char c = string.charAt(i);
+				char encodedChar = ' ';
+				if (!(c >= 'A' && c <= 'Z') && !(c >= 'a' && c <= 'z') ) { //check if character is letter
+					encodedChar = string.charAt(i);
+				}else {
+					if((c >= 'A' && c <= 'Z')) { //check if character is uppercase
+						if( ((c -'A')+key)  < 26  ) {//No overflow into non-alphabet characters
+							encodedChar = (char)(string.charAt(i)+key);
+						}else {
+							int end = 26 - (c - 'A');
+							int newKey = key - end;
+							encodedChar = (char)('A'+ newKey);
+						}
+						
+					}else {//only lowercase letters at this point
+						if( ((c -'a')+key)  < 26  ) {//No overflow into non-alphabet characters
+							encodedChar = (char)(string.charAt(i)+key);
+						}else {
+							int end = 26 - (c - 'a');
+							int newKey = key - end;
+							encodedChar = (char)('a'+ newKey);
+						}
+					}
+				}
+				encodedString.append(encodedChar);
+			}
+			return encodedString.toString();
 		}
 
 	}

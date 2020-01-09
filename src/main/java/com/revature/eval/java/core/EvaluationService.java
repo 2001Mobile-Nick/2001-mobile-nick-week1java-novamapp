@@ -745,8 +745,6 @@ public class EvaluationService {
 	public boolean isLuhnValid(String string) {
 		// TODO Write an implementation for this method declaration
 		if(string.length() <= 1) return false;
-		string = string.replace(" ", "");
-		StringBuilder luhnNum = new StringBuilder();
 		int sum = 0;
 		
 		int count = 1;
@@ -799,6 +797,41 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
+		System.out.println("String: "+string);
+		int[] operands = new int[2];
+		int operandsCount=0;
+		char c;
+		for(int i=0; i<string.length(); i++) {
+			if (operandsCount >= operands.length) break;
+			c = string.charAt(i);
+			if(c == '-') {
+				try {
+					//While still num, add to char
+					char nextValue = string.charAt(i+1);
+					String num = "-"+nextValue;
+					System.out.println("Found int: "+ Integer.parseInt(num));
+					i++;
+					operands[operandsCount] = Integer.parseInt(num);
+					operandsCount++;
+				}catch(Exception e) {
+					System.out.println("Could not parse int");
+				}
+			}else if( ( c >= '0' && c <= '9') ) {
+				operands[operandsCount] = (c - '0');
+				operandsCount++;
+			}
+		}
+		
+		if(string.indexOf("plus") > 0) {
+			
+		}else if(string.indexOf("minus") > 0) {
+					
+		}else if(string.indexOf("multiplied") > 0) {
+			
+		}else if(string.indexOf("divided") > 0) {
+					
+		}
+		
 		return 0;
 	}
 

@@ -480,7 +480,6 @@ public class EvaluationService {
 		
 		int[] primeNumbers = new int[100000];
 		primeNumbers[0] = 2;
-		System.out.println("i: "+i);
 		
 		while(count < i) { //while have less than n prime nums
 
@@ -527,7 +526,9 @@ public class EvaluationService {
 	 *
 	 */
 	static class AtbashCipher {
-
+		
+		private static String[] backWardAlphabet = "z y x w v u t s r q p o n m l k j i h g f e d c b a".split(" ");
+		
 		/**
 		 * Question 13
 		 * 
@@ -536,7 +537,25 @@ public class EvaluationService {
 		 */
 		public static String encode(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			//If capital, find char - 'A'
+			string = string.toLowerCase();
+			StringBuilder encodedString = new StringBuilder();
+			int charIndex;
+			char c;
+			int count = 0;
+			
+			for(int i=0; i<string.length(); i++) {
+				c = string.charAt(i);
+				if (!(c >= 'A' && c <= 'Z') && !(c >= 'a' && c <= 'z') ) { //check if character is not letter
+					continue;//Discard if not letter
+				}else {
+					charIndex = c - 'a';
+					encodedString.append(backWardAlphabet[charIndex]);
+					count++;
+					if(count%5 == 0) encodedString.append(" ");
+				}
+			}
+			return encodedString.toString();
 		}
 
 		/**
@@ -547,6 +566,7 @@ public class EvaluationService {
 		 */
 		public static String decode(String string) {
 			// TODO Write an implementation for this method declaration
+			//System.out.println("Decode: "+string);
 			return null;
 		}
 	}

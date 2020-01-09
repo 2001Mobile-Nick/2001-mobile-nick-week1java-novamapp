@@ -691,7 +691,6 @@ public class EvaluationService {
 		int sum = 0;
 		HashSet<Integer> multiples = new HashSet<Integer>();
 		for(int j=0; j<set.length; j++) {
-			System.out.print(set[j]+" ");
 			int count = 1;
 			int highest = 0;
 			while(true) {
@@ -702,7 +701,6 @@ public class EvaluationService {
 			}
 		}
 		for(int multiple: multiples) {
-			System.out.print(multiple+" ");
 			sum+=multiple;
 		}
 		return sum;
@@ -746,6 +744,29 @@ public class EvaluationService {
 	 */
 	public boolean isLuhnValid(String string) {
 		// TODO Write an implementation for this method declaration
+		if(string.length() <= 1) return false;
+		string = string.replace(" ", "");
+		StringBuilder luhnNum = new StringBuilder();
+		int sum = 0;
+		
+		int count = 1;
+		char c;
+		for(int i=string.length()-1; i>=0; i--) {
+			c = string.charAt(i);
+			if( ( c >= '0' && c <= '9') ) {
+				if(count%2 == 0) {
+					int num = c-'0';
+					num = 2*num;
+					if(num > 9) num = num-9;
+					sum += num;
+				}
+				sum += (c -'0');
+				count++;
+			}
+		}
+		if(sum%10 == 0) {
+			return true;
+		}
 		return false;
 	}
 

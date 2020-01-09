@@ -526,8 +526,8 @@ public class EvaluationService {
 	 *
 	 */
 	static class AtbashCipher {
-		
-		private static String[] backWardAlphabet = "z y x w v u t s r q p o n m l k j i h g f e d c b a".split(" ");
+		private static String backwardAlphabet = "z y x w v u t s r q p o n m l k j i h g f e d c b a";
+		private static String[] backWardAlphabetArray = backwardAlphabet.split(" ");
 		
 		/**
 		 * Question 13
@@ -550,7 +550,7 @@ public class EvaluationService {
 					continue;//Discard if not letter
 				}else {
 					charIndex = c - 'a';
-					encodedString.append(backWardAlphabet[charIndex]);
+					encodedString.append(backWardAlphabetArray[charIndex]);
 					count++;
 					if(count%5 == 0) encodedString.append(" ");
 				}
@@ -566,8 +566,27 @@ public class EvaluationService {
 		 */
 		public static String decode(String string) {
 			// TODO Write an implementation for this method declaration
-			//System.out.println("Decode: "+string);
-			return null;
+			System.out.println("Decode: "+string);
+			StringBuilder decodedString = new StringBuilder();
+			
+			int charIndex;
+			char c;
+			
+			for(int i=0; i<string.length(); i++) {
+				c = string.charAt(i);
+				if (!(c >= 'A' && c <= 'Z') && !(c >= 'a' && c <= 'z') ) { //check if character is not letter
+					if(c == ' ') {
+						continue;
+					}else {
+						decodedString.append(c);
+					}
+				}else {
+					charIndex = 'a'+backwardAlphabet.replaceAll("\\s","").indexOf(c);
+					decodedString.append((char)charIndex);
+				}
+			}
+			System.out.println("Decoded string: "+decodedString.toString()+"\n");
+			return decodedString.toString();
 		}
 	}
 

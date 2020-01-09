@@ -655,7 +655,6 @@ public class EvaluationService {
 		for(int i=0; i<string.length(); i++) {
 			stringLetters.add(string.charAt(i));
 		}
-		System.out.println("Set size: "+stringLetters.size());
 		if(stringLetters.size() >= 26) return true;
 		return false;
 	}
@@ -670,6 +669,7 @@ public class EvaluationService {
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
 		// TODO Write an implementation for this method declaration
+		//System.out.println(given.toString());
 		return null;
 	}
 
@@ -688,7 +688,24 @@ public class EvaluationService {
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		int sum = 0;
+		HashSet<Integer> multiples = new HashSet<Integer>();
+		for(int j=0; j<set.length; j++) {
+			System.out.print(set[j]+" ");
+			int count = 1;
+			int highest = 0;
+			while(true) {
+				highest = set[j]*count;
+				if(highest > i)break;
+				multiples.add(highest);
+				count++;
+			}
+		}
+		for(int multiple: multiples) {
+			System.out.print(multiple+" ");
+			sum+=multiple;
+		}
+		return sum;
 	}
 
 	/**

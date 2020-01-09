@@ -4,6 +4,7 @@ import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -612,7 +613,6 @@ public class EvaluationService {
 	 */
 	public boolean isValidIsbn(String string) {
 		// TODO Write an implementation for this method declaration
-		System.out.println("ISBN: "+string);
 		string = string.replace("-", "");
 		
 		int count = 10;
@@ -632,7 +632,6 @@ public class EvaluationService {
 			}
 			count--;
 		}
-		System.out.println("sum: "+sum);
 		if(sum%11 == 0)return true;
 		return false;
 	}
@@ -651,7 +650,13 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
+		string = string.replace(" ", "");
+		HashSet<Character> stringLetters = new HashSet<Character>();
+		for(int i=0; i<string.length(); i++) {
+			stringLetters.add(string.charAt(i));
+		}
+		System.out.println("Set size: "+stringLetters.size());
+		if(stringLetters.size() >= 26) return true;
 		return false;
 	}
 

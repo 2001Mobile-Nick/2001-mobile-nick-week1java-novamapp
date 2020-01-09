@@ -364,7 +364,7 @@ public class EvaluationService {
 		int length = inputStr.length();
 		int sum = 0;
 		for(int i=0; i<length; i++) {
-			int current = inputStr.charAt(i) - '0';
+			int current = inputStr.charAt(i) - '0';//convert char to int in memory
 			sum += Math.pow(current, length);
 		}
 		if(input == sum) return true;
@@ -566,7 +566,6 @@ public class EvaluationService {
 		 */
 		public static String decode(String string) {
 			// TODO Write an implementation for this method declaration
-			System.out.println("Decode: "+string);
 			StringBuilder decodedString = new StringBuilder();
 			
 			int charIndex;
@@ -585,7 +584,6 @@ public class EvaluationService {
 					decodedString.append((char)charIndex);
 				}
 			}
-			System.out.println("Decoded string: "+decodedString.toString()+"\n");
 			return decodedString.toString();
 		}
 	}
@@ -614,6 +612,28 @@ public class EvaluationService {
 	 */
 	public boolean isValidIsbn(String string) {
 		// TODO Write an implementation for this method declaration
+		System.out.println("ISBN: "+string);
+		string = string.replace("-", "");
+		
+		int count = 10;
+		int sum=0;
+		char c;
+		for(int i=0; i<string.length(); i++) {
+			c = string.charAt(i);
+			if( !( c >= '0' && c <= '9') ) {
+				if(c != 'X') {//invaid value, automatically invalid
+					return false;
+				}else {
+					sum += (count * 10);
+				}
+			}else {
+				int num = c - '0';
+				sum += (count * num);
+			}
+			count--;
+		}
+		System.out.println("sum: "+sum);
+		if(sum%11 == 0)return true;
 		return false;
 	}
 

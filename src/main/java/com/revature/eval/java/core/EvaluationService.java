@@ -475,7 +475,31 @@ public class EvaluationService {
 	 */
 	public int calculateNthPrime(int i) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		int numberLine = 2;
+		int count = 0;//to track the amount of prime numbers so far
+		
+		int[] primeNumbers = new int[100000];
+		primeNumbers[0] = 2;
+		System.out.println("i: "+i);
+		
+		while(count < i) { //while have less than n prime nums
+
+			numberLine++;
+			boolean isPrime = true;
+
+			for(int j=0; j<=count; j++) {
+				if(numberLine%primeNumbers[j] == 0) {
+					isPrime = false;
+					break;
+				}
+			}
+			
+			if(isPrime) {
+				count++;
+				primeNumbers[count] = numberLine;
+			}
+		}
+		return primeNumbers[count-1];
 	}
 
 	/**

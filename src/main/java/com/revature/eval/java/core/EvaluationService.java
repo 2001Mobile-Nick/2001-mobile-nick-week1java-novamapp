@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class EvaluationService {
 
-	private int[] primeNumbers;
+	private int[] primeNumbers; 
 
 	public EvaluationService() {
 		primeNumbers = new int[100000];

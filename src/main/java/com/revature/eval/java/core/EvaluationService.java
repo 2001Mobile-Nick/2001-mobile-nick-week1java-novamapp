@@ -5,10 +5,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class EvaluationService {
+	
+	private int[] primeNumbers;
+	
+	public EvaluationService() {
+		calculatePrimeNumbers();
+	}
+	
+	private void calculatePrimeNumbers() {
+		
+	}
 
 	/**
 	 * 1. Without using the StringBuilder or StringBuffer class, write a method that
@@ -384,13 +395,40 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		//divide by two
-			//result is mod =1 or mod =0
+		System.out.println("Long: "+l);
+		List<Long> primeFactors = new LinkedList<Long>();
+		int numberLine = 2;
+		int count = 0;//to track the amount of prime numbers so far
 		
-		//if mod =1, not divisible by two, add 1 to two then divide
+		int[] primeNumbers = new int[1000000];
+		primeNumbers[0] = 2;
 		
-		//if mod =0, divisible by two
-		return null;
+		while(numberLine <= l) { //while have less than n prime nums
+
+			numberLine++;
+			boolean isPrime = true;
+
+			for(int j=0; j<=count; j++) {
+				if(numberLine%primeNumbers[j] == 0) {
+					isPrime = false;
+					break;
+				}
+			}
+			
+			if(isPrime) {
+				count++;
+				primeNumbers[count] = numberLine;
+			}
+		}
+		for(int j=0; j<count; j++) {
+			if(l <500) {
+				System.out.println(l+" % "+primeNumbers[j]+" "+(l % primeNumbers[j]));
+			}
+			if((l % primeNumbers[j]) == 0) {
+				primeFactors.add((long)primeNumbers[j]);
+			}
+		}
+		return primeFactors;
 	}
 
 	/**

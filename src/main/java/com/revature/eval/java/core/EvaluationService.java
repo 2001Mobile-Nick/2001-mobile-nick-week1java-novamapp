@@ -22,7 +22,7 @@ public class EvaluationService {
 		int numberLine = 2;
 		int count = 0;//to track the amount of prime numbers so far
 		primeNumbers[0] = 2;
-		while(numberLine <= 1000000) { //while have less than n prime nums
+		while(numberLine <= 100000) { //while have less than n prime nums
 
 			numberLine++;
 			boolean isPrime = true;
@@ -417,15 +417,18 @@ public class EvaluationService {
 		// TODO Write an implementation for this method declaration
 		System.out.println("Long: "+l);
 		List<Long> primeFactors = new LinkedList<Long>();
+		System.out.print("Prime Factors: ");
+		long higherNumber = l;
 		for(int j=0; j<primeNumbers.length; j++) {
-			if(primeNumbers[j] > l)break;
-			if(l <500) {
-				System.out.println(l+" % "+primeNumbers[j]+" "+(l % primeNumbers[j]));
-			}
-			if((l % primeNumbers[j]) == 0) {
+			if(higherNumber < primeNumbers[j]) break;
+			while(true) {
+				if( !(higherNumber%primeNumbers[j] == 0) )break;
+				System.out.print(primeNumbers[j]+" ");
 				primeFactors.add((long)primeNumbers[j]);
+				higherNumber = higherNumber/primeNumbers[j];
 			}
 		}
+		System.out.println();
 		return primeFactors;
 	}
 
@@ -512,6 +515,7 @@ public class EvaluationService {
 	 */
 	public int calculateNthPrime(int i) {
 		// TODO Write an implementation for this method declaration
+		if(i < 2) return 0;
 		return primeNumbers[i-1];
 	}
 

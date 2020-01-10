@@ -14,11 +14,31 @@ public class EvaluationService {
 	private int[] primeNumbers;
 	
 	public EvaluationService() {
+		primeNumbers = new int[100000];
 		calculatePrimeNumbers();
 	}
 	
 	private void calculatePrimeNumbers() {
-		
+		int numberLine = 2;
+		int count = 0;//to track the amount of prime numbers so far
+		primeNumbers[0] = 2;
+		while(numberLine <= 1000000) { //while have less than n prime nums
+
+			numberLine++;
+			boolean isPrime = true;
+
+			for(int j=0; j<=count; j++) {
+				if(numberLine%primeNumbers[j] == 0) {
+					isPrime = false;
+					break;
+				}
+			}
+			
+			if(isPrime) {
+				count++;
+				primeNumbers[count] = numberLine;
+			}
+		}
 	}
 
 	/**
@@ -397,30 +417,8 @@ public class EvaluationService {
 		// TODO Write an implementation for this method declaration
 		System.out.println("Long: "+l);
 		List<Long> primeFactors = new LinkedList<Long>();
-		int numberLine = 2;
-		int count = 0;//to track the amount of prime numbers so far
-		
-		int[] primeNumbers = new int[1000000];
-		primeNumbers[0] = 2;
-		
-		while(numberLine <= l) { //while have less than n prime nums
-
-			numberLine++;
-			boolean isPrime = true;
-
-			for(int j=0; j<=count; j++) {
-				if(numberLine%primeNumbers[j] == 0) {
-					isPrime = false;
-					break;
-				}
-			}
-			
-			if(isPrime) {
-				count++;
-				primeNumbers[count] = numberLine;
-			}
-		}
-		for(int j=0; j<count; j++) {
+		for(int j=0; j<primeNumbers.length; j++) {
+			if(primeNumbers[j] > l)break;
 			if(l <500) {
 				System.out.println(l+" % "+primeNumbers[j]+" "+(l % primeNumbers[j]));
 			}
@@ -514,30 +512,7 @@ public class EvaluationService {
 	 */
 	public int calculateNthPrime(int i) {
 		// TODO Write an implementation for this method declaration
-		int numberLine = 2;
-		int count = 0;//to track the amount of prime numbers so far
-		
-		int[] primeNumbers = new int[100000];
-		primeNumbers[0] = 2;
-		
-		while(count < i) { //while have less than n prime nums
-
-			numberLine++;
-			boolean isPrime = true;
-
-			for(int j=0; j<=count; j++) {
-				if(numberLine%primeNumbers[j] == 0) {
-					isPrime = false;
-					break;
-				}
-			}
-			
-			if(isPrime) {
-				count++;
-				primeNumbers[count] = numberLine;
-			}
-		}
-		return primeNumbers[count-1];
+		return primeNumbers[i-1];
 	}
 
 	/**

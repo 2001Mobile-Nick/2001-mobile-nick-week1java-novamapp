@@ -1,5 +1,7 @@
 package com.revature.eval.java.core;
 
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -324,7 +326,6 @@ public class EvaluationService {
 
 		public BinarySearch(List<T> sortedList) {
 			super();
-			System.out.println("List: "+sortedList.toString());
 			this.sortedList = sortedList;
 		}
 
@@ -684,8 +685,7 @@ public class EvaluationService {
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
 		// TODO Write an implementation for this method declaration
-		//System.out.println(given.toString());
-		return null;
+		return given.plus((long)1e9, ChronoUnit.SECONDS);
 	}
 
 	/**

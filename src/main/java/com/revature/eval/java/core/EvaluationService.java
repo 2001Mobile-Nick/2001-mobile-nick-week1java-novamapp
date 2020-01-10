@@ -797,39 +797,56 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		System.out.println("String: "+string);
 		int[] operands = new int[2];
 		int operandsCount=0;
 		char c;
 		for(int i=0; i<string.length(); i++) {
-			if (operandsCount >= operands.length) break;
+			//if (operandsCount >= operands.length) break;
 			c = string.charAt(i);
 			if(c == '-') {
+				char nextValue;
+				String num = "-";
 				try {
 					//While still num, add to char
-					char nextValue = string.charAt(i+1);
-					String num = "-"+nextValue;
-					System.out.println("Found int: "+ Integer.parseInt(num));
-					i++;
-					operands[operandsCount] = Integer.parseInt(num);
+					while(true) {
+						nextValue = string.charAt(i+1);
+						if(!( nextValue >= '0' && nextValue <= '9')) break;
+						num += nextValue;
+						i++;
+					}
 					operandsCount++;
+					operands[operandsCount-1] = Integer.parseInt(num);
 				}catch(Exception e) {
-					System.out.println("Could not parse int");
+					System.out.println(e.toString());
 				}
 			}else if( ( c >= '0' && c <= '9') ) {
-				operands[operandsCount] = (c - '0');
+				String positiveNum ="";
+				char nextValue;
+				while(true) {
+					positiveNum = positiveNum.concat(""+string.charAt(i));
+					nextValue = string.charAt(i+1);
+					if(!( nextValue >= '0' && nextValue <= '9')) break;
+					i++;
+				}
 				operandsCount++;
+				try {
+					operands[operandsCount-1] = Integer.parseInt(positiveNum);
+				}catch(Exception e) {
+					System.out.println(e.toString());
+				}
 			}
 		}
 		
 		if(string.indexOf("plus") > 0) {
-			
+			return operands[0]+operands[1];
 		}else if(string.indexOf("minus") > 0) {
-					
+			return operands[0]-operands[1];
 		}else if(string.indexOf("multiplied") > 0) {
-			
+			return operands[0]*operands[1];
 		}else if(string.indexOf("divided") > 0) {
-					
+			try {
+				return operands[0]/operands[1];
+			}catch(ArithmeticException e) {}
 		}
 		
 		return 0;

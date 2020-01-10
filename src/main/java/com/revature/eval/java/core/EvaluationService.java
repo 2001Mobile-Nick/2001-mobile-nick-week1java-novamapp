@@ -3,6 +3,8 @@ package com.revature.eval.java.core;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -311,18 +313,18 @@ public class EvaluationService {
 	 * 
 	 */
 
-	//static class BinarySearch<T> extends ArrayList{
-	static class BinarySearch<T>{
+	static class BinarySearch<T extends Comparable<T>> extends ArrayList{
 		private List<T> sortedList;
 
-		//@Override
-		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+		@Override
+		public int indexOf(Object t) {
+			return Collections.binarySearch(sortedList, (T)t);
+			//return 0;
 		}
 
 		public BinarySearch(List<T> sortedList) {
 			super();
+			System.out.println("List: "+sortedList.toString());
 			this.sortedList = sortedList;
 		}
 
@@ -415,20 +417,16 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		System.out.println("Long: "+l);
 		List<Long> primeFactors = new LinkedList<Long>();
-		System.out.print("Prime Factors: ");
 		long higherNumber = l;
 		for(int j=0; j<primeNumbers.length; j++) {
 			if(higherNumber < primeNumbers[j]) break;
 			while(true) {
 				if( !(higherNumber%primeNumbers[j] == 0) )break;
-				System.out.print(primeNumbers[j]+" ");
 				primeFactors.add((long)primeNumbers[j]);
 				higherNumber = higherNumber/primeNumbers[j];
 			}
 		}
-		System.out.println();
 		return primeFactors;
 	}
 

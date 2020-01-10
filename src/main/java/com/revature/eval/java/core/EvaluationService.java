@@ -28,7 +28,7 @@ public class EvaluationService {
 		int numberLine = 2;
 		int count = 0;//to track the amount of prime numbers so far
 		primeNumbers[0] = 2;
-		while(numberLine <= 100000) { //while have less than n prime nums
+		while(numberLine <= 150000) {
 
 			numberLine++;
 			boolean isPrime = true;
@@ -71,6 +71,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
+		phrase = phrase.replaceAll("[^A-Za-z]", " ").replace("  ", " ");
 		String[] wordList = phrase.toUpperCase().split(" ");
 		String acronym = "";
 		for(int i=0; i<wordList.length; i++) {
@@ -240,14 +241,21 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		StringBuilder strOfNums = new StringBuilder();
+		int countDigits = 0;
 		for (int i=0; i < string.length(); i++) {
 	        char c = string.charAt(i);
 	        if (!(c < '0' || c > '9')) {
+	        	countDigits++;
+	        	if(countDigits > 11) {
+	        		throw new IllegalArgumentException();
+	        	}
 	        	if(i == 0) {
 	        		if(c > '1') strOfNums.append(c);
 	        	} else {
 	        		strOfNums.append(c);
 	        	}
+	        }else if(!Arrays.asList(' ','-', '.', ',', '(', ')').contains(c)) {
+	        	throw new IllegalArgumentException();
 	        }
 	    }
 		return strOfNums.toString();
@@ -264,7 +272,7 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
-		string = string.replaceAll("[^A-Za-z]", " ");
+		string = string.replaceAll("[^A-Za-z]", " ").replaceAll("  ", " ");
 		String[] words = string.split(" ");
 		Map<String, Integer> wordMap = new HashMap<String, Integer>();
 		
@@ -366,15 +374,19 @@ public class EvaluationService {
 		for(int i=0; i<words.length; i++) {
 			boolean isConsonant = true;
 			int count = 0;
+			char c;
 			while( (count < words[i].length()) ) {
-				isConsonant = !Arrays.asList('A', 'E', 'I', 'O', 'U').contains(words[i].toUpperCase().charAt(count));
+				c = words[i].toUpperCase().charAt(count);
+				isConsonant = !Arrays.asList('A', 'E', 'I', 'O', 'U').contains(c);
 				if(!isConsonant) break;
+				if(c == 'Q' && words[i].toUpperCase().charAt(count+1) == 'U') count++;
 				count++;
 			}
-			String translatedWord = words[i].substring(count, words[i].length()).concat(words[i].substring(0, count))+"ay ";
+			String translatedWord = words[i].substring(count, words[i].length()).concat(words[i].substring(0, count))+"ay";
 			pigLatin.append(translatedWord);
+			if(words.length > 1 && i<words.length-1) pigLatin.append(" ");
 		}
-		return null;
+		return pigLatin.toString();
 	}
 
 	/**
@@ -516,7 +528,9 @@ public class EvaluationService {
 	 */
 	public int calculateNthPrime(int i) {
 		// TODO Write an implementation for this method declaration
-		if(i < 2) return 0;
+		if(i < 1) {
+			throw new IllegalArgumentException();
+		}
 		return primeNumbers[i-1];
 	}
 
@@ -556,7 +570,6 @@ public class EvaluationService {
 		 */
 		public static String encode(String string) {
 			// TODO Write an implementation for this method declaration
-			//If capital, find char - 'A'
 			string = string.toLowerCase();
 			StringBuilder encodedString = new StringBuilder();
 			int charIndex;
@@ -566,6 +579,11 @@ public class EvaluationService {
 			for(int i=0; i<string.length(); i++) {
 				c = string.charAt(i);
 				if (!(c >= 'A' && c <= 'Z') && !(c >= 'a' && c <= 'z') ) { //check if character is not letter
+					if(( c >= '0' && c <= '9')) {
+						encodedString.append(c);
+						count++;
+						if(count%5 == 0) encodedString.append(" ");
+					}
 					continue;//Discard if not letter
 				}else {
 					charIndex = c - 'a';
@@ -574,7 +592,9 @@ public class EvaluationService {
 					if(count%5 == 0) encodedString.append(" ");
 				}
 			}
-			return encodedString.toString();
+			String result = encodedString.toString();
+			if(result.charAt(result.length()-1) == ' ') result = result.substring(0, result.length()-1);
+			return result;
 		}
 
 		/**
@@ -726,7 +746,7 @@ public class EvaluationService {
 			int highest = 0;
 			while(true) {
 				highest = set[j]*count;
-				if(highest > i)break;
+				if(highest >= i)break;
 				multiples.add(highest);
 				count++;
 			}
@@ -776,10 +796,11 @@ public class EvaluationService {
 	public boolean isLuhnValid(String string) {
 		// TODO Write an implementation for this method declaration
 		if(string.length() <= 1) return false;
+		string = string.replace(" ", "");
 		int sum = 0;
-		
 		int count = 1;
 		char c;
+		
 		for(int i=string.length()-1; i>=0; i--) {
 			c = string.charAt(i);
 			if( ( c >= '0' && c <= '9') ) {
@@ -791,6 +812,8 @@ public class EvaluationService {
 				}
 				sum += (c -'0');
 				count++;
+			}else if(c != '-') {
+				return false;
 			}
 		}
 		if(sum%10 == 0) {
@@ -867,7 +890,6 @@ public class EvaluationService {
 				}
 			}
 		}
-		
 		if(string.indexOf("plus") > 0) {
 			return operands[0]+operands[1];
 		}else if(string.indexOf("minus") > 0) {
